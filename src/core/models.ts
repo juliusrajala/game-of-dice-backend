@@ -1,21 +1,26 @@
-import cuid from 'cuid';
+import { db } from './pgp';
+import { ulid } from 'ulid';
 
-// Plant related queries
-
-// Creates a new plant
-export const createPlant = (db, data: Partial<Plant>) => {
+// Creates a new event
+export const createEvent = (data: Partial<DiceEvent>) => {
   const sql = `
-    INSERT INTO plant (plant_id, name, days_to_wait, added_datetime)
-    VALUES ($[plantId], $[name], $[daysToWait], NOW())
+    INSERT INTO events (event_id, event_type, creator_id, timestamp, description${
+      !!data['rolls'] ? ', rolls' : ''
+    })
+    VALUES ($[event_id], $[event_type], $[creator_id], $[timestamp], $[description] ${
+      !!data.rolls ? ", '" + JSON.stringify(data.rolls) + "'" : ''
+    })
+    RETURNING *;
   `;
   const params = {
     ...data,
-    plantId: cuid() // Provides us a "unique" ID for our plant.
+    timestamp: Date.now(),
+    event_id: ulid(Date.now()) // Provides us a "unique" ID for our event.
   };
   return db.one(sql, params);
 };
 
-// Get all plants
-export const getPlants = db => {
-  return db.any('SELECT * FROM plant');
+// Get all events
+export const getEvents = () => {
+  return db.any('SELECT * FROM events');
 };

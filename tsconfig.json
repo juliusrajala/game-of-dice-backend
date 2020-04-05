@@ -2,13 +2,14 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "module": "commonjs",
-    "sourceMap": true,
+    "inlineSourceMap": true,
     "target": "ES2017",
     "outDir": "./build/",
-    "rootDir": "./src/",
+    "rootDir": "./src",
     "baseUrl": "./",
-    "typeRoots": ["./types"]
+    "resolveJsonModule": true,
+    "types": ["jest", "node"]
   },
   "include": ["src/**/*.ts", "./types.d.ts"],
-  "exclude": ["node_modules", "build"]
+  "exclude": ["node_modules", "build", "**/*.spec.ts"]
 }

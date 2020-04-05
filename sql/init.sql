@@ -1,7 +1,18 @@
-CREATE TABLE public.plant (
-  plant_id character varying(25) PRIMARY KEY NOT NULL,
-  name character varying(25) NOT NULL,
-  added_datetime timestamp with time zone NOT NULL DEFAULT NOW(),
-  last_watered timestamp with time zone,
-  days_to_wait numeric NOT NULL DEFAULT 1
+CREATE TABLE public.characters (
+  character_id character varying(36) PRIMARY KEY not null,
+  hit_points numeric,
+  armor_class numeric,
+  name character varying(256) not null
+);
+
+CREATE TABLE public.events (
+  event_id character varying(36) PRIMARY KEY not null,
+  event_type character varying(25),
+  creator_id character varying(36),
+  timestamp numeric NOT NULL,
+  description character varying(256) NOT NULL,
+  rolls json,
+  skill character varying(25),
+  damage_type character varying(25),
+  target character varying(256)
 );
