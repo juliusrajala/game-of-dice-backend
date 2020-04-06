@@ -41,7 +41,7 @@ export const getEvents = () => {
   return db.any('SELECT * FROM events');
 };
 
-export const createUser = ({ name, email }) => {
+export const createUser = (name, email) => {
   const sql = `
     INSERT INTO users (user_id, user_name, user_email, creation_timestamp)
     VALUES ($[id], $[name], $[email], $[timestamp])
@@ -56,4 +56,10 @@ export const createUser = ({ name, email }) => {
   };
 
   return db.one(sql, params);
+};
+
+export const getUser = (id, email) => {
+  return db.one(
+    `SELECT * FROM users WHERE user_id = ${id} AND user_email = ${email}`
+  );
 };
