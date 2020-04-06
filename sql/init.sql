@@ -1,3 +1,10 @@
+CREATE TABLE public.users (
+  user_id character varying(36) PRIMARY KEY not null,
+  user_name character varying(36) not null,
+  timestamp numeric NOT NULL,
+  user_email character varying(256) not null
+);
+
 CREATE TABLE public.characters (
   character_id character varying(36) PRIMARY KEY not null,
   hit_points numeric,
