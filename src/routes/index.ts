@@ -48,7 +48,7 @@ routes.post('/v1/user/create', (req, res) => {
 });
 
 routes.post('/v1/user', (req, res) => {
-  getUser(req.body.id, req.body.email)
+  getUser(req.body.id)
     .then(result => res.send(result))
     .catch(err => handleGeneralError(err, res));
 });
