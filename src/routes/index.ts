@@ -1,5 +1,11 @@
 import router from 'express-promise-router';
-import { getEvents, createEvent, createRoll, getUser } from '../core/models';
+import {
+  getEvents,
+  createEvent,
+  createRoll,
+  getUser,
+  createUser
+} from '../core/models';
 
 const handleGeneralError = (err, res) => {
   console.log('Error in endpoint', err);
@@ -36,7 +42,7 @@ routes.post('/v1/create/roll', (req, res) => {
 });
 
 routes.post('/v1/user/create', (req, res) => {
-  getUser(req.body.name, req.body.email)
+  createUser(req.body.name, req.body.email)
     .then(result => res.send(result))
     .catch(err => handleGeneralError(err, res));
 });

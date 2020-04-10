@@ -43,7 +43,7 @@ export const getEvents = () => {
 
 export const createUser = (name, email) => {
   const sql = `
-    INSERT INTO users (user_id, user_name, user_email, creation_timestamp)
+    INSERT INTO users (user_id, user_name, user_email, timestamp)
     VALUES ($[id], $[name], $[email], $[timestamp])
     RETURNING *;
   `;
