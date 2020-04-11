@@ -3,14 +3,18 @@ CREATE TABLE public.users (
   user_name character varying(36) not null,
   timestamp numeric NOT NULL,
   user_email character varying(256) not null,
-  accent_color character varying(7)
+  accent_color character varying(7),
+  is_admin boolean
 );
 
 CREATE TABLE public.characters (
   character_id character varying(36) PRIMARY KEY not null,
+  character_name character varying(256) not null,
   hit_points numeric,
   armor_class numeric,
-  name character varying(256) not null
+  attack_bonus numeric,
+  damage_taken numeric,
+  owner_id character varying(36) not null
 );
 
 CREATE TABLE public.events (

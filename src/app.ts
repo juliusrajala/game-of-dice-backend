@@ -13,9 +13,16 @@ const http = httpServer.createServer(app);
 const io = socketClient(http);
 
 io.on('connection', socket => {
-  console.log('A user has connected');
+  log(`Client has connected + ${socket}`);
+  socket.on('join', room => {
+    log(`room joined + ${room}`);
+  });
   socket.on('data', msg => {
     log(msg);
+  });
+
+  socket.on('disconnect', () => {
+    log('A client has disconnected');
   });
 });
 

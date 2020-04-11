@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run start-db && npm run start-nodemon",
-    "start-nodemon": "cross-env NODE_ENV=development nodemon --watch",
+    "dev": "npm run start-db && npm run watch",
+    "watch": "cross-env NODE_ENV=development nodemon --watch",
     "start-db": "docker-compose up -d",
     "clean-db": "shx rm -rf postgres-data",
     "build": "tsc",

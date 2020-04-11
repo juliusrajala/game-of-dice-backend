@@ -5,12 +5,16 @@ import {
   createRoll,
   getUser,
   createUser,
-  setUserColor
+  setUserColor,
+  createCharacter,
+  getCharacters,
+  loginUser
 } from '../core/models';
+import { validateEmail } from '../core/validation';
 
 const handleGeneralError = (err, res) => {
   console.log('Error in endpoint', err);
-  res.sendStatus(400);
+  res.sendStatus(500);
 };
 
 const routes = router();
@@ -59,12 +63,41 @@ routes.post('/v1/user', (req, res) => {
     .catch(err => handleGeneralError(err, res));
 });
 
+routes.post('/v1/user/login', (req, res) => {
+  if (!validateEmail(req.body.email)) {
+    return res.status(400).json({ message: 'Invalid email format' });
+  }
+  if (/\s/.test(req.body.name)) {
+    return res.status(400).send({ message: 'Name can not contain whitespace' });
+  }
+  loginUser(req.body.name, req.body.email)
+    .then(result => {
+      if (result) {
+        return res.send(result);
+      }
+      return res.sendStatus(404);
+    })
+    .catch(err => handleGeneralError(err, res));
+});
+
 routes.post('/v1/user/color', (req, res) => {
-  setUserColor(req.body.id, req.body.color)
-    .then(result => result.send(result))
+  setUserColor(req.body.user_id, req.body.color)
+    .then(result => res.send(result))
     .catch(err => handleGeneralError(err, res));
 });
 
 // Character related routes
+
+routes.post('/v1/characters/create', (req, res) => {
+  createCharacter(req.body)
+    .then(result => res.send(result))
+    .catch(err => handleGeneralError(err, res));
+});
+
+routes.get('/v1/characters', (req, res) => {
+  getCharacters()
+    .then(result => res.send(result))
+    .catch(err => handleGeneralError(err, res));
+});
 
 export default routes;

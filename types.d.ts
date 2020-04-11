@@ -48,10 +48,11 @@ declare interface HpEvent extends DndEvent {
 }
 
 declare interface Character {
-  id: string;
-  name: string;
-  hp: number;
-  ac: number;
-  attackBonus: number;
-  damageTaken: number;
+  character_id: string;
+  character_name: string;
+  hit_points: number;
+  armor_class: number;
+  attack_bonus: number;
+  damage_taken: number;
+  owner_id: string;
 }
