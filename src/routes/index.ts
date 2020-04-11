@@ -4,7 +4,8 @@ import {
   createEvent,
   createRoll,
   getUser,
-  createUser
+  createUser,
+  setUserColor
 } from '../core/models';
 
 const handleGeneralError = (err, res) => {
@@ -45,6 +46,7 @@ routes.post('/v1/create/roll', (req, res) => {
     .catch(err => handleGeneralError(err, res));
 });
 
+// User related routes
 routes.post('/v1/user/create', (req, res) => {
   createUser(req.body.name, req.body.email)
     .then(result => res.send(result))
@@ -56,5 +58,13 @@ routes.post('/v1/user', (req, res) => {
     .then(result => res.send(result))
     .catch(err => handleGeneralError(err, res));
 });
+
+routes.post('/v1/user/color', (req, res) => {
+  setUserColor(req.body.id, req.body.color)
+    .then(result => result.send(result))
+    .catch(err => handleGeneralError(err, res));
+});
+
+// Character related routes
 
 export default routes;

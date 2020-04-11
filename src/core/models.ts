@@ -58,6 +58,20 @@ export const createUser = (name, email) => {
   return db.one(sql, params);
 };
 
+export const setUserColor = (id, color) => {
+  const sql = `
+    UPDATE users
+    SET accent_color = $[color]
+    WHERE user_id = $[id]
+    RETURNING *;
+  `;
+  const params = {
+    id,
+    color
+  };
+  return db.one(sql, params);
+};
+
 export const getUser = id => {
   return db.one(`SELECT * FROM users WHERE user_id = '${id}'`);
 };

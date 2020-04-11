@@ -2,7 +2,8 @@ CREATE TABLE public.users (
   user_id character varying(36) PRIMARY KEY not null,
   user_name character varying(36) not null,
   timestamp numeric NOT NULL,
-  user_email character varying(256) not null
+  user_email character varying(256) not null,
+  accent_color character varying(7)
 );
 
 CREATE TABLE public.characters (

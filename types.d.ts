@@ -23,7 +23,7 @@ declare interface User {
   user_email: string;
   user_name: string;
   user_id: string;
-  color: string;
+  accent_color: string;
 }
 
 declare interface DndEvent {
