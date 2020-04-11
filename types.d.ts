@@ -1,11 +1,8 @@
-// Technical
-
-declare interface SocketRoom {}
-
 // Domain related types.
 
 declare type DieType =
   | 'd2'
+  | 'd3'
   | 'd4'
   | 'd6'
   | 'd8'
@@ -14,7 +11,7 @@ declare type DieType =
   | 'd20'
   | 'd100';
 
-declare type EvenType = 'dice_event' | 'hp_event' | '';
+declare type EventType = 'dice_event' | 'hp_event' | '';
 
 declare interface Die {
   id: string;
@@ -22,8 +19,15 @@ declare interface Die {
   value: number | null;
 }
 
+declare interface User {
+  user_email: string;
+  user_name: string;
+  user_id: string;
+  color: string;
+}
+
 declare interface DndEvent {
-  event_type: 'dice' | 'hp';
+  event_type: EventType;
   event_id: string;
   creator: string;
   timestamp: number;
@@ -31,14 +35,23 @@ declare interface DndEvent {
 }
 
 declare interface DiceEvent extends DndEvent {
-  event_type: 'dice';
+  event_type: 'dice_event';
   rolls: Die[];
   skill?: string;
 }
 
 declare interface HpEvent extends DndEvent {
-  event_type: 'hp';
+  event_type: 'hp_event';
   target: string;
   value: number;
-  damage_type: 'spell' | 'elemental' | 'non-lethal' | 'trap';
+  type: 'spell' | 'elemental' | 'non-lethal' | 'trap';
+}
+
+declare interface Character {
+  id: string;
+  name: string;
+  hp: number;
+  ac: number;
+  attackBonus: number;
+  damageTaken: number;
 }
