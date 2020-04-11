@@ -59,5 +59,5 @@ export const createUser = (name, email) => {
 };
 
 export const getUser = id => {
-  return db.one(`SELECT * FROM users WHERE user_id = ${id}`);
+  return db.one(`SELECT * FROM users WHERE user_id = '${id}'`);
 };

@@ -14,6 +14,10 @@ const handleGeneralError = (err, res) => {
 
 const routes = router();
 
+routes.get('/', (req, res) => {
+  res.send({ message: 'I am alive. No worries.' });
+});
+
 routes.get('/v1/events', (req, res) => {
   getEvents()
     .then(results => res.send(results))

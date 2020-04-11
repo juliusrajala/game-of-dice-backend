@@ -43,5 +43,9 @@
     "@types/express-ws": "~3.0.0",
     "@types/socket.io": "~2.1.4",
     "nodemon": "^2.0.2"
+  },
+  "engines": {
+    "node": "12.14.1",
+    "npm": "6.13.4"
   }
 }
