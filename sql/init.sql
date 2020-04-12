@@ -14,6 +14,9 @@ CREATE TABLE public.characters (
   armor_class numeric,
   attack_bonus numeric,
   damage_taken numeric,
+  fortitude numeric,
+  reflex numeric,
+  will numeric,
   owner_id character varying(36) not null
 );
 

@@ -99,20 +99,29 @@ export const getUser = id => {
   return db.one(`SELECT * FROM users WHERE user_id = '${id}'`);
 };
 
-const optionalKey = (name, value) => (value ? `, ${name}` : '');
-const optionalValue = value => (value ? `, '${value}'` : '');
-
 export const createCharacter = (data: Partial<Character>) => {
   const sql = `
-    INSERT INTO characters (character_id, character_name, owner_id
-      ${optionalKey('armor_class', data.armor_class)}
-      ${optionalKey('hit_points', data.hit_points)}
-      ${optionalKey('attack_bonus', data.attack_bonus)}
+    INSERT INTO characters (
+      character_id,
+      character_name,
+      owner_id,
+      armor_class,
+      hit_points,
+      attack_bonus,
+      reflex,
+      will,
+      fortitude
     )
-    VALUES ($[character_id], $[character_name], $[owner_id]
-      ${optionalValue(data.armor_class)}
-      ${optionalValue(data.hit_points)}
-      ${optionalValue(data.attack_bonus)}
+    VALUES (
+      $[character_id],
+      $[character_name],
+      $[owner_id],
+      $[armor_class],
+      $[hit_points],
+      $[attack_bonus],
+      $[reflex],
+      $[will],
+      $[fortitude]
       )
     RETURNING *;
   `;
@@ -133,4 +142,25 @@ export const getCharacters = () => {
   INNER JOIN users u ON (c.owner_id = u.user_id)
   `;
   return db.any(sql);
+};
+
+export const editCharacterAttribute = (id, key, value) => {
+  const sql = `
+    WITH updated AS (
+      UPDATE characters
+      SET ${key} = $[value]
+      WHERE character_id = $[id]
+      RETURNING *
+    )
+    SELECT updated.*, u.accent_color, u.user_name as player_name
+    FROM updated
+    INNER JOIN users u ON (u.user_id = updated.owner_id)
+  `;
+
+  const params = {
+    id,
+    value
+  };
+
+  return db.one(sql, params);
 };
