@@ -10,7 +10,7 @@ CREATE TABLE public.users (
 CREATE TABLE public.rooms (
   room_id character varying(36) PRIMARY KEY,
   owner_id character varying(36) REFERENCES public.users(user_id),
-  room_name character varying 36 not null,
+  room_name character varying(36) not null,
   timestamp numeric NOT NULL
 );
 
@@ -18,6 +18,8 @@ CREATE TABLE public.rooms (
 CREATE TABLE public.characters (
   character_id character varying(36) PRIMARY KEY not null,
   character_name character varying(256) not null,
+  owner_id character varying(36) REFERENCES public.users(user_id),
+  room_id character varying(36) REFERENCES public.rooms(room_id)
   hit_points numeric default 0,
   armor_class numeric default 0,
   attack_bonus numeric default 0,
@@ -27,7 +29,7 @@ CREATE TABLE public.characters (
   will numeric default 0,
   initiative numeric default 0,
   level numeric default 0,
-  owner_id character varying(36) REFERENCES public.users(user_id)
+  class character varying(32) default ''
 );
 
 CREATE TABLE public.events (

@@ -55,4 +55,10 @@ declare interface Character {
   attack_bonus: number;
   damage_taken: number;
   owner_id: string;
+  reflex: number;
+  will: number;
+  fortitude: number;
+  initiative: number;
+  level: number;
+  class: string;
 }
