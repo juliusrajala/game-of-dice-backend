@@ -19,7 +19,7 @@ CREATE TABLE public.characters (
   character_id character varying(36) PRIMARY KEY not null,
   character_name character varying(256) not null,
   owner_id character varying(36) REFERENCES public.users(user_id),
-  room_id character varying(36) REFERENCES public.rooms(room_id)
+  room_id character varying(36) REFERENCES public.rooms(room_id),
   hit_points numeric default 0,
   armor_class numeric default 0,
   attack_bonus numeric default 0,
