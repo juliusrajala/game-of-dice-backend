@@ -114,7 +114,8 @@ export const createCharacter = (data: Partial<Character>) => {
       fortitude,
       initiative,
       level,
-      class
+      class,
+      room_id
     )
     VALUES (
       $[character_id],
@@ -128,7 +129,8 @@ export const createCharacter = (data: Partial<Character>) => {
       $[fortitude],
       $[initiative],
       $[level],
-      $[class]
+      $[class],
+      $[room_id]
       )
     RETURNING *;
   `;

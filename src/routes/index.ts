@@ -99,8 +99,8 @@ routes.post('/v1/characters/create', (req, res) => {
     .catch(err => handleGeneralError(err, res));
 });
 
-routes.get('/v1/characters', (req, res) => {
-  getCharacters(req.query.roomId)
+routes.get('/v1/characters/:roomId', (req, res) => {
+  getCharacters(req.params.roomId)
     .then(result => res.send(result))
     .catch(err => handleGeneralError(err, res));
 });
