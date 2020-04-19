@@ -141,13 +141,29 @@ export const createCharacter = (data: Partial<Character>) => {
   return db.one(sql, params);
 };
 
-export const getCharacters = () => {
+export const getCharacters = roomId => {
   const sql = `
   SELECT c.*, u.accent_color as accent_color, u.user_name as player_name
+  WHERE room_id = $[roomId]
   FROM characters c
   INNER JOIN users u ON (c.owner_id = u.user_id)
   `;
-  return db.any(sql);
+  return db.any(sql, { roomId });
+};
+
+export const createRoom = (owner_id, room_name) => {
+  const sql = `
+    INSERT INTO rooms (owner_id, room_name, room_id, timestamp)
+    VALUES ($[owner_id], $[room_name], $[room_id], $[timestamp])
+    RETURNING *
+  `;
+  const params = {
+    owner_id,
+    room_name,
+    room_id: ulid(Date.now()),
+    timestamp: Date.now()
+  };
+  return db.one(sql, params);
 };
 
 export const editCharacterAttribute = (id, key, value) => {
@@ -169,4 +185,8 @@ export const editCharacterAttribute = (id, key, value) => {
   };
 
   return db.one(sql, params);
+};
+
+export const getUserRooms = user_id => {
+  return db.any(`SELECT * FROM rooms WHERE owner_id = '${user_id}'`);
 };

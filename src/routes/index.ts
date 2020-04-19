@@ -97,7 +97,7 @@ routes.post('/v1/characters/create', (req, res) => {
 });
 
 routes.get('/v1/characters', (req, res) => {
-  getCharacters()
+  getCharacters(req.query.roomId)
     .then(result => res.send(result))
     .catch(err => handleGeneralError(err, res));
 });
