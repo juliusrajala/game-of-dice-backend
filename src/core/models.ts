@@ -42,14 +42,15 @@ export const createRoll = (data: Partial<DiceEvent>) => {
 };
 
 // Get all events
-export const getEvents = () => {
+export const getEvents = roomId => {
   const sql = `
   SELECT ev.*, u.accent_color as accent_color, u.user_name as player_name
   FROM events ev
   INNER JOIN users u ON (ev.creator_id = u.user_id)
+  WHERE ev.room_id = $[roomId]
   ORDER BY ev.timestamp DESC
   `;
-  return db.any(sql);
+  return db.any(sql, { roomId });
 };
 
 export const createUser = (name, email) => {
@@ -143,10 +144,10 @@ export const createCharacter = (data: Partial<Character>) => {
 
 export const getCharacters = roomId => {
   const sql = `
-  SELECT c.*, u.accent_color as accent_color, u.user_name as player_name
-  WHERE room_id = $[roomId]
-  FROM characters c
-  INNER JOIN users u ON (c.owner_id = u.user_id)
+    SELECT c.*, u.accent_color as accent_color, u.user_name as player_name
+    FROM characters c
+    INNER JOIN users u ON (c.owner_id = u.user_id)
+    WHERE c.room_id = $[roomId]
   `;
   return db.any(sql, { roomId });
 };
@@ -189,4 +190,9 @@ export const editCharacterAttribute = (id, key, value) => {
 
 export const getUserRooms = user_id => {
   return db.any(`SELECT * FROM rooms WHERE owner_id = '${user_id}'`);
+};
+
+export const getRoom = roomId => {
+  console.log(roomId);
+  return db.any(`SELECT * FROM rooms WHERE room_id = '${roomId}'`);
 };

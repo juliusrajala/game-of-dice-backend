@@ -11,7 +11,8 @@ import {
   loginUser,
   editCharacterAttribute,
   getUserRooms,
-  createRoom
+  createRoom,
+  getRoom
 } from '../core/models';
 import { validateEmail } from '../core/validation';
 import { ulid } from 'ulid';
@@ -27,8 +28,8 @@ routes.get('/', (req, res) => {
   res.send({ message: 'I am alive. No worries.' });
 });
 
-routes.get('/v1/events', (req, res) => {
-  getEvents()
+routes.get('/v1/events/:roomId', (req, res) => {
+  getEvents(req.params.roomId)
     .then(results => res.send(results))
     .catch(err => handleGeneralError(err, res));
 });
@@ -105,8 +106,14 @@ routes.get('/v1/characters', (req, res) => {
 });
 
 routes.get('/v1/rooms', (req, res) => {
-  getUserRooms(req.query.roomId)
+  getUserRooms(req.query.user_id)
     .then(result => res.send(result))
+    .catch(err => handleGeneralError(err, res));
+});
+
+routes.get('/v1/rooms/:roomId', (req, res) => {
+  getRoom(req.params.roomId)
+    .then(result => res.send(result[0]))
     .catch(err => handleGeneralError(err, res));
 });
 
