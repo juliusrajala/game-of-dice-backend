@@ -9,7 +9,9 @@ import {
   createCharacter,
   getCharacters,
   loginUser,
-  editCharacterAttribute
+  editCharacterAttribute,
+  getUserRooms,
+  createRoom
 } from '../core/models';
 import { validateEmail } from '../core/validation';
 import { ulid } from 'ulid';
@@ -98,6 +100,18 @@ routes.post('/v1/characters/create', (req, res) => {
 
 routes.get('/v1/characters', (req, res) => {
   getCharacters(req.query.roomId)
+    .then(result => res.send(result))
+    .catch(err => handleGeneralError(err, res));
+});
+
+routes.get('/v1/rooms', (req, res) => {
+  getUserRooms(req.query.roomId)
+    .then(result => res.send(result))
+    .catch(err => handleGeneralError(err, res));
+});
+
+routes.post('/v1/rooms/create', (req, res) => {
+  createRoom(req.body.owner_id, req.body.room_name)
     .then(result => res.send(result))
     .catch(err => handleGeneralError(err, res));
 });
