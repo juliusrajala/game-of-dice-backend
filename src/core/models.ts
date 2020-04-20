@@ -23,8 +23,8 @@ export const createEvent = (data: Partial<DiceEvent>) => {
 export const createRoll = (data: Partial<DiceEvent>) => {
   const sql = `
     WITH inserted AS (
-      INSERT INTO events (event_id, event_type, creator_id, timestamp, description, rolls)
-      VALUES ($[event_id], $[event_type], $[creator_id], $[timestamp], $[description], CAST($[rolls] AS json))
+      INSERT INTO events (event_id, event_type, creator_id, timestamp, description, rolls, room_id)
+      VALUES ($[event_id], $[event_type], $[creator_id], $[timestamp], $[description], CAST($[rolls] AS json), $[room_id])
       RETURNING *
     )
     SELECT inserted.*, u.accent_color, u.user_name as player_name

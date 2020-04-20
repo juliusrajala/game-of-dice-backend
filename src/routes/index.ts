@@ -45,7 +45,6 @@ routes.post('/v1/events/create', (req, res) => {
 });
 
 routes.post('/v1/create/roll', (req, res) => {
-  console.log(req.body);
   createRoll(req.body)
     .then(result => {
       (req as any).io.send(result);

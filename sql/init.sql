@@ -30,7 +30,7 @@ CREATE TABLE public.characters (
   initiative numeric default 0,
   level numeric default 0,
   class character varying(32) default '',
-  portrait character varying(256) default ''
+  portrait_url character varying(256) default ''
 );
 
 CREATE TABLE public.events (
