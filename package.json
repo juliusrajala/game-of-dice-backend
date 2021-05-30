@@ -37,7 +37,7 @@
     "ts-node": "^8.6.2",
     "typescript": "^3.7.5",
     "ulid": "~2.3.0",
-    "ws": "~7.2.3"
+    "ws": "~7.4.6"
   },
   "devDependencies": {
     "@types/express-ws": "~3.0.0",
